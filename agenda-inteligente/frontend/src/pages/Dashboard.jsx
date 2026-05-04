@@ -293,7 +293,7 @@ function CartaoTarefa({ tarefa, onEditar, onDeletar, onAlternar }) {
         )}
         {tarefa.dataLembrete && (
           <p className="text-xs text-blue-500 mt-1">
-            🔔 {new Date(tarefa.dataLembrete).toLocaleString('pt-BR')}
+            🔔 {new Date(tarefa.dataLembrete).toLocaleString('pt-BR', { timeZone: 'America/Recife' })}
           </p>
         )}
       </div>
