@@ -62,18 +62,20 @@ export default function Dashboard() {
     }
 
     try {
+      const dataLembreteUTC = dataLembrete ? new Date(dataLembrete).toISOString() : null
+
       if (tarefaEditando) {
         await api.put(`/tarefas/${tarefaEditando.id}`, {
           titulo,
           descricao,
-          dataLembrete: dataLembrete || null,
+          dataLembrete: dataLembreteUTC,
           feita: tarefaEditando.feita
         })
       } else {
         await api.post('/tarefas', {
           titulo,
           descricao,
-          dataLembrete: dataLembrete || null
+          dataLembrete: dataLembreteUTC
         })
       }
       fecharModal()
@@ -82,7 +84,7 @@ export default function Dashboard() {
       setErro('Erro ao salvar tarefa')
     }
   }
-
+  
   async function alternarFeita(tarefa) {
     try {
       await api.put(`/tarefas/${tarefa.id}`, {
@@ -243,11 +245,12 @@ export default function Dashboard() {
                   Lembrete por email
                 </label>
                 <input
-                  type="datetime-local"
-                  value={dataLembrete}
-                  onChange={(e) => setDataLembrete(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+  type="datetime-local"
+  value={dataLembrete}
+  onChange={(e) => setDataLembrete(e.target.value)}
+  min={new Date().toISOString().slice(0, 16)}
+  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
               </div>
             </div>
 
